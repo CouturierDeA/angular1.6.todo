@@ -1,0 +1,122 @@
+<!--sortKey sortOrder-->
+<div class="overflow-x-auto row">
+   <table class="table table-border table-perons border"
+          ng-class="{ 'order-asc': vm.sortOrder === '-',  'order-desc': vm.sortOrder === '' }">
+      <thead>
+      <tr>
+         <th class="table__header" ng-click="vm.sortPersons('firstName')" ng-class="{ 'active': vm.sortKey === 'firstName' }">First name
+            <i class="fa fa-arrow-up"></i><i class="fa fa-arrow-down"></i></th>
+         <th class="table__header" ng-click="vm.sortPersons('lastName')" ng-class="{ 'active': vm.sortKey === 'lastName' }">Last name
+            <i class="fa fa-arrow-up"></i><i class="fa fa-arrow-down"></i></th>
+         <th class="table__header" ng-click="vm.sortPersons('age')" ng-class="{ 'active': vm.sortKey === 'age' }">Age
+            <i class="fa fa-arrow-up"></i><i class="fa fa-arrow-down"></i></th>
+         <th class="table__header" ng-click="vm.sortPersons('gender')" ng-class="{ 'active': vm.sortKey === 'gender' }">Gender
+            <i class="fa fa-arrow-up"></i><i class="fa fa-arrow-down"></i>
+         </th>
+         <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody ng-if="vm.persons.length" >
+      <tr ng-repeat="person in vm.persons | orderBy:vm.sort">
+         <td>{{ person.firstName | defaultVal }}</td>
+         <td>{{ person.lastName | defaultVal }}</td>
+         <td>{{ person.age | defaultVal }}</td>
+         <td>{{ person.gender | defaultVal }}</td>
+         <td class="table__actions">
+            <div class="d-flex justify-content-end">
+               <button class="btn align-self-end  mr-3 btn--small btn-success" ng-click="vm.editPerson(person)">
+                  Edit
+               </button>
+               <button class="btn align-self-end  btn--small btn-danger" ng-click="vm.deletePerson(person.id)">
+                  Delete
+               </button>
+            </div>
+         </td>
+      </tr>
+      </tbody>
+   </table>
+   <hr ng-if="vm.persons.length">
+</div>
+<button ng-click="vm.createPerson()" type="button" class="ml-auto btn btn-success">Add
+</button>
+
+<div class="modal" ng-class="{ 'show' : vm.modalOpen }" ng-click="vm.formCancel($event)">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Edit Person</h4>
+            <button ng-click="vm.formCancel()" type="button" class="close">&times;
+            </button>
+         </div>
+
+         <!-- Modal body -->
+         <div class="modal-body">
+            <form name="myForm" novalidate ng-submit="vm.editPersonSubmit()">
+               <div class="form-group"
+                    ng-class="{ 'has-error' : myForm.firstName.$invalid && !myForm.firstName.$pristine }">
+                  <label>First name</label>
+                  <input type="text" autocomplete="off" ng-model="vm.person.firstName" class="form-control" name="firstName" required
+                         maxlength="30"
+                         placeholder="First name">
+                  <p ng-show="myForm.firstName.$invalid && !myForm.firstName.$pristine" class="help-block">First name is
+                     required.</p>
+               </div>
+               <div class="form-group"
+                    ng-class="{ 'has-error' : myForm.lastName.$invalid && !myForm.lastName.$pristine }" maxlength="30">
+                  <label>Last name</label>
+                  <input ng-model="vm.person.lastName"
+                         autocomplete="off"
+                         name="lastName" type="text" class="form-control"
+                         placeholder="Last name" required maxlength="30">
+                  <p ng-show="myForm.lastName.$invalid && !myForm.lastName.$pristine" class="help-block">Last name is
+                     required.</p>
+
+               </div>
+               <div class="form-group"
+                    ng-class="{ 'has-error' : myForm.age.$invalid && !myForm.age.$pristine }">
+                  <label>Age</label>
+                  <input ng-model="vm.person.age" name="age" type="number" class="form-control" placeholder="Age"
+                         min="1" max="150" required>
+                  <p ng-show="myForm.age.$invalid && !myForm.age.$error.min && !myForm.age.$error.max && !myForm.age.$pristine"
+                     class="help-block">Age field is
+                     required.</p>
+                  <p ng-show="myForm.age.$error.min" class="help-block">Min age is 1</p>
+                  <p ng-show="myForm.age.$error.max" class="help-block">Max age is 150</p>
+
+               </div>
+               <div class="form-group"
+                    ng-class="{ 'has-error' : myForm.gender.$invalid && !myForm.gender.$pristine }">
+
+                  <!--<input ng-model="vm.person.gender" name="gender" type="text" class="form-control" placeholder="Gender" required>-->
+                  <label>Gender</label>
+                  <select name="gender" ng-model="vm.person.gender" type="text" placeholder="Gender"
+                          class="form-control">
+                     <option ng-repeat="option in vm.genders" value="{{option}}">{{option}}</option>
+                  </select>
+                  <p ng-show="myForm.gender.$invalid && !myForm.gender.$pristine" class="help-block">Gender field is
+                     required.</p>
+               </div>
+
+            </form>
+         </div>
+
+         <!-- Modal footer -->
+         <div class="modal-footer d-flex justify-content-between">
+            <button ng-click="vm.formCancel()"
+                    type="button"
+                    class="btn btn-danger btn--small">
+               Close
+            </button>
+            <button type="submit" value="Submit" ng-disabled="myForm.$invalid && vm.errorsVisible"
+                    ng-click="vm.editPersonSubmit()"
+                    ng-class="{ 'disabled' : myForm.firstName.$invalid && !myForm.firstName.$pristine }"
+                    class="btn btn--small btn-success">
+               <i ng-if="vm.loading" class="fa fa-spinner fa-spin"></i>
+               Submit
+            </button>
+         </div>
+
+      </div>
+   </div>
+</div>
