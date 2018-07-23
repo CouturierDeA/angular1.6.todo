@@ -1,0 +1,33 @@
+<div tabindex="0" class="modal modal-close" ng-class="{ 'show' : vm.modalOpen }" ng-keydown="vm.formCancel($event)" ng-click="vm.formCancel($event)">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Edit Person</h4>
+            <button type="button" class="modal-close close">&times;
+            </button>
+         </div>
+
+         <!-- Modal body -->
+         <div class="modal-body" ng-transclude>
+
+         </div>
+
+         <!-- Mo<!--footer -->
+         <div class="modal-footer d-flex justify-content-between">
+            <button type="button"
+                    class="btn btn-danger btn--small modal-close">
+               Close
+            </button>
+            <button type="submit" value="Submit" ng-disabled="vm.submitDisabled"
+                    ng-click="vm.submit()"
+                    ng-class="{ 'disabled' : vm.disabled }"
+                    class="btn btn--small btn-success">
+               <i ng-if="vm.loading" class="fa fa-spinner fa-spin"></i>
+               Submit
+            </button>
+         </div>
+
+      </div>
+   </div>
+</div>

@@ -17,6 +17,10 @@
       overflow-x: auto;
    }
 
+   form:focus {
+      outline: none;
+   }
+
    .table-perons td {
       min-width: 120px;
       max-width: 180px;
@@ -58,9 +62,11 @@
    }
 
    .modal {
+      display: block !important;
       background-color: rgba(0, 0, 0, .8);
       opacity: 0;
-      transition: opacity ease-in-out .2s;
+      visibility: hidden;
+      transition: opacity ease-in-out .2s, visibility ease-in-out .2s;
       overflow: auto;
    }
 
@@ -68,9 +74,10 @@
       margin-top: 15vh;
    }
 
-   .show {
-      display: block !important;
+   .modal.show {
+
       opacity: 1;
+      visibility: visible;
    }
 
    .has-error .help-block {
