@@ -3,6 +3,7 @@ var angular = require('angular');
 var app = angular
 .module('todoApp', []);
 
+
 app.component('app', {
   templateUrl: 'public/templates/app.html',
   controllerAs: 'vm'

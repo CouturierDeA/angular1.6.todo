@@ -1,14 +1,56 @@
-let path = require('path');
-let utils = require('./utils');
-let webpack = require('webpack');
-let config = require('../config');
-let merge = require('webpack-merge');
-let baseWebpackConfig = require('./webpack.base.conf');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
-let env = config.build.env;
+var path = require('path');
+var utils = require('./utils');
+var webpack = require('webpack');
+var config = require('../config');
+var merge = require('webpack-merge');
+var baseWebpackConfig = require('./webpack.base.conf');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var env = config.build.env;
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-let webpackConfig = merge(baseWebpackConfig, {
+ function getMinChunks(module, count) {
+  // any required modules inside node_modules are extracted to vendor
+  return (
+    module.resource &&
+    /\.js$/.test(module.resource) &&
+    module.resource.indexOf(
+      path.join(__dirname, '../node_modules')
+    ) === 0
+  )
+};
+
+var webpackConfig = merge(baseWebpackConfig, {
+  mode: "production",
+  // using mode: "production" attaches the following configuration:
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: true, // Turn off production minimization because of angular 1.6 issues
+          mangle: false,
+          sourceMap: false
+        }
+      })
+    ],
+    splitChunks: {
+      chunks: "all",
+      minSize: 350,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -26,11 +68,11 @@ let webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: false, // Turn off production minimization because of angular 1.6 issues
-      mangle: false,
-      sourceMap: false
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: true, // Turn off production minimization because of angular 1.6 issues
+    //   mangle: false,
+    //   sourceMap: false
+    // }),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
@@ -58,30 +100,30 @@ let webpackConfig = merge(baseWebpackConfig, {
       minimize: true
     }),
     // split vendor js into its own file
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: function (module, count) {
-        // any required modules inside node_modules are extracted to vendor
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
-        )
-      }
-    }),
-    // extract webpack runtime and module manifest to its own file in order to
-    // prevent vendor hash from being updated whenever app bundle is updated
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
-    })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   minChunks: function (module, count) {
+    //     // any required modules inside node_modules are extracted to vendor
+    //     return (
+    //       module.resource &&
+    //       /\.js$/.test(module.resource) &&
+    //       module.resource.indexOf(
+    //         path.join(__dirname, '../node_modules')
+    //       ) === 0
+    //     )
+    //   }
+    // }),
+    // // extract webpack runtime and module manifest to its own file in order to
+    // // prevent vendor hash from being updated whenever app bundle is updated
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'manifest',
+    //   chunks: ['vendor']
+    // })
   ]
 });
 
 if (config.build.productionGzip) {
-  let CompressionWebpackPlugin = require('compression-webpack-plugin');
+  var CompressionWebpackPlugin = require('compression-webpack-plugin');
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
@@ -99,7 +141,7 @@ if (config.build.productionGzip) {
 }
 
 if (config.build.bundleAnalyzerReport) {
-  let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
