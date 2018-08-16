@@ -5,7 +5,9 @@ module.exports = function (app) {
     templateUrl: 'public/templates/expand-text.html',
     bindings: {
       'text': '<?',
-      maxLength: '<?'
+      maxLength: '<?',
+      showText: '<?',
+      hideText: '<?'
     },
 
     controller: function ModalController($scope, $rootScope) {
