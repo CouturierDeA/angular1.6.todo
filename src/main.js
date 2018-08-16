@@ -15,6 +15,13 @@ app.filter('defaultVal', function () {
   }
 });
 
+
+app.filter('truncate', function () {
+  return function (val, lng) {
+    return (typeof val === 'string' && val.length >= lng || 20) ? val.substring(0, lng || 20) + '...' : val;
+  }
+});
+
 app.controller('mainCtrl', function () {
   this.persons = ['Male', 'Female'];
 });
@@ -48,5 +55,6 @@ app.service('mainSvc', function ($http) {
 require('./persons')(app);
 require('./personsForm')(app);
 require('./modal')(app);
+require('./expand-text')(app);
 // require('./myTabs')(app);
 // require('./myPane')(app);

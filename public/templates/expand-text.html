@@ -1,0 +1,38 @@
+<style>
+   .expand-text {
+      position: relative;
+      max-width: 300px;
+   }
+
+   .expand-text.expanded .expand-text--short {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+   }
+
+   .expand-text.expanded .expand-text--long {
+      position: relative;
+      visibility: visible;
+      opacity: 1;
+   }
+
+   .expand-text--short {
+
+      position: relative;
+      visibility: visible;
+      opacity: 1;
+   }
+
+   .expand-text--long {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+   }
+</style>
+<div class="expand-text" ng-class="{ 'expanded' : $ctrl.expanded }">
+   <div class="expand-text expand-text--short">{{ $ctrl.text | truncate: 20 }}</div>
+   <div class="expand-text expand-text--long">{{ $ctrl.text }}</div>
+   <button class="expand-text--action" ng-click="$ctrl.expanded = !$ctrl.expanded">
+      {{ $ctrl.expanded ? 'Hide' : 'Show' }}
+   </button>
+</div>
