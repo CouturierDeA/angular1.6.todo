@@ -4,7 +4,8 @@ module.exports = function (app) {
     transclude: true,
     templateUrl: 'public/templates/expand-text.html',
     bindings: {
-      'text': '<?'
+      'text': '<?',
+      maxLength: '<?'
     },
 
     controller: function ModalController($scope, $rootScope) {

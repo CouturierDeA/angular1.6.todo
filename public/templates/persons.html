@@ -37,7 +37,7 @@
    <hr ng-if="vm.persons.length">
 </div>
 <button ng-click="vm.createPerson()" type="button" class="ml-auto btn btn-success">Add</button>
-<expand-text text="'ASD asda sdsadsadsadsadsads ds  dsasad s dsadsadasdsad ddsd sadsad'"></expand-text>
+<expand-text max-length="40" text="'ASD asda sdsadsadsadsadsads ds  dsasad s dsadsadasdsad ddsd sadsad'"></expand-text>
 
 <modal modal-open="vm.modalOpen" loading="vm.loading" :submitDisabled="myForm.$invalid && vm.errorsVisible">
    <div ng-transclude-slot="modal-body">
