@@ -55,6 +55,6 @@ app.service('mainSvc', function ($http) {
 require('./persons')(app);
 require('./personsForm')(app);
 require('./modal')(app);
-require('./expand-text')(app);
+require('./showLargeText')(app);
 // require('./myTabs')(app);
 // require('./myPane')(app);

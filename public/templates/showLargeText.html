@@ -30,10 +30,11 @@
    }
 
 </style>
-<div class="expand-text" ng-class="{ 'expanded' : $ctrl.expanded }">
+<div class="expand-text" ng-class="{ 'expanded' : $ctrl.expanded  }">
    <div class="expand-text expand-text--short">{{ $ctrl.text | truncate: $ctrl.maxLength }}</div>
    <div class="expand-text expand-text--long">{{ $ctrl.text }}</div>
-   <button class="btn btn--success expand-text--action" ng-click="$ctrl.expanded = !$ctrl.expanded">
+   <button ng-if="$ctrl.longHeight > $ctrl.shortHeight" class="btn btn--success expand-text--action" ng-click="$ctrl.expanded = !$ctrl.expanded">
       {{ $ctrl.expanded ? $ctrl.hideText || 'Hide' : $ctrl.showText || 'Show' }}
    </button>
+
 </div>
