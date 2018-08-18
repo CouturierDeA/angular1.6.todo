@@ -3,10 +3,12 @@ var angular = require('angular');
 var app = angular
 .module('todoApp', []);
 
-
 app.component('app', {
   templateUrl: 'public/templates/app.html',
-  controllerAs: 'vm'
+  // controllerAs: 'vm',
+  controller: function(){
+    this.hello = 'Hello from app ctrl';
+  }
 });
 
 app.filter('defaultVal', function () {
@@ -24,6 +26,7 @@ app.filter('truncate', function () {
 
 app.controller('mainCtrl', function () {
   this.persons = ['Male', 'Female'];
+  this.hello = 'Hello from mainCtrl';
 });
 
 app.service('mainSvc', function ($http) {
@@ -56,5 +59,5 @@ require('./persons')(app);
 require('./personsForm')(app);
 require('./modal')(app);
 require('./showLargeText')(app);
-// require('./myTabs')(app);
-// require('./myPane')(app);
+require('./myTabs')(app);
+require('./myPane')(app);
