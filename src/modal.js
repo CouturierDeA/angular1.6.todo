@@ -26,7 +26,6 @@ module.exports = function (app) {
       // };
 
       vm.submit = function () {
-        console.warn($scope)
         $rootScope.$emit('on-modal-submit')
       }
     }

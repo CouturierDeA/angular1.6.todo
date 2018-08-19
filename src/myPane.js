@@ -5,7 +5,8 @@ module.exports = function (app) {
       tabsCtrl: '^myTabs',
     },
     bindings: {
-      title: '@'
+      title: '@',
+      name: '@'
     },
     controller: function () {
       this.$onInit = function () {
@@ -13,6 +14,6 @@ module.exports = function (app) {
         console.log(this);
       };
     },
-    template: '<div class="tab-pane" ng-show="$ctrl.selected" ng-transclude></div>'
+    template: '<div class="tab-pane" ng-show="$ctrl.name == $ctrl.tabsCtrl.activeTab" ng-transclude></div>'
   });
 };

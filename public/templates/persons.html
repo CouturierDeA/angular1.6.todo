@@ -38,7 +38,12 @@
 </div>
 <button ng-click="vm.createPerson()" type="button" class="ml-auto btn btn-success">Add</button>
 
-<show-large-text show-text="'Expand'" hide-text="'Close'" max-length="40" text="'ASD asda sdsadsadsadsadsads ASD asda sdsadsadsadsadsads ASD sdsadsadsadsadsads ASD'"></show-large-text>
+<show-large-text show-text="'More'"
+                 hide-text="'Close'"
+                 max-length="40"
+                 text="'ASD asda sdsadsadsadsadsads ASD asda sdsadsadsadsadsads ASD sdsadsadsadsadsads ASD'">
+
+</show-large-text>
 
 <modal modal-open="vm.modalOpen" loading="vm.loading" :submitDisabled="myForm.$invalid && vm.errorsVisible">
    <div ng-transclude-slot="modal-body">

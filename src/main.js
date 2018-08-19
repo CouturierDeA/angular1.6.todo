@@ -6,8 +6,19 @@ var app = angular
 app.component('app', {
   templateUrl: 'public/templates/app.html',
   // controllerAs: 'vm',
-  controller: function(){
+  controller: function($scope){
+    var ctrl = this;
     this.hello = 'Hello from app ctrl';
+    this.activeTab = 'second';
+    this.manualTabChange = function(activeTab){
+      ctrl.activeTab = activeTab;
+      console.log('tab changed manually from app controller')
+    };
+    this.$onInit = function(){
+      $scope.$on('tab-change', function (event, data) {
+        console.log('tab-change', data); // 'Some data'
+      });
+    }
   }
 });
 

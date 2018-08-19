@@ -2,16 +2,14 @@
    <h2 class="mb-3">Persons</h2>
 
    <div class="col pt-3 pb-3 ">
-      <!--<my-tabs>-->
-         <!--<my-pane title="First tab">-->
+      <!--ACTIVE TAB NAME: {{ $ctrl.activeTab }}-->
+      <!--<my-tabs on-tab-change="$ctrl.manualTabChange" tabs-id="Main page tabs" active-tab="$ctrl.activeTab">-->
+         <!--<my-pane name="first" title="First tab">-->
             <!--<h4>First Tab</h4>-->
-            <!--<p>Lorem ipsum dolor sit amet</p>-->
             <!--{{ $ctrl.hello }}-->
          <!--</my-pane>-->
-         <!--<my-pane title="Second Tab">-->
+         <!--<my-pane name="second" title="Second Tab">-->
             <!--<h4>Second Tab</h4>-->
-            <!--<em>Mauris elementum elementum enim at suscipit.</em>-->
-            <!--<p><a href ng-click="i = i + 1">counter: {{i || 0}}</a></p>-->
             <!--<div ng-controller="mainCtrl as $ctrl">-->
                <!--{{ $ctrl.hello }}-->
             <!--</div>-->

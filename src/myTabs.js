@@ -2,16 +2,27 @@ module.exports = function(app){
 
   app.component('myTabs', {
     transclude: true,
-    controller: function MyTabsController() {
+    bindings: {
+      activeTab: '=',
+      tabsId: '@',
+      onTabChange: '<?'
+    },
+    controller: function MyTabsController($rootScope, $scope) {
       var panes = this.panes = [];
+      var ctrl = this;
       this.select = function (pane) {
-        angular.forEach(panes, function (pane) {
-          pane.selected = false;
-        });
-        pane.selected = true;
+        if(typeof ctrl.onTabChange === 'function'){
+          ctrl.onTabChange(pane.name)
+        }else{
+          ctrl.activeTab = pane.name;
+          $scope.$emit('tab-change', {
+            tabsId: ctrl.tabsId,
+            activeTab: ctrl.activeTab
+          });
+        }
       };
       this.addPane = function (pane) {
-        if (panes.length === 0) {
+        if (panes.length === 0 && !ctrl.activeTab) {
           this.select(pane);
         }
         panes.push(pane);
